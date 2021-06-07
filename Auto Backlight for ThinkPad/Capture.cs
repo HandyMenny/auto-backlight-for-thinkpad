@@ -87,8 +87,8 @@ namespace Auto_Backlight_for_ThinkPad
             foreach (Device dev in _ri.EnumeratedDevices)
             {
                 bool hook = false;
-                hook |= dev.Type == Device.DeviceType.Mouse && dev.Path.StartsWith(@"\\?\ACPI#LEN0");
-                hook |= dev.Type == Device.DeviceType.Keyboard && dev.Path.StartsWith(@"\\?\ACPI#LEN0");
+                hook |= dev.Type == Device.DeviceType.Mouse && dev.Path.StartsWith(@"\\?\ACPI#LEN");
+                hook |= dev.Type == Device.DeviceType.Keyboard && dev.Path.StartsWith(@"\\?\ACPI#LEN");
                 hook |= dev.Type == Device.DeviceType.Hid && dev.Info != null &&
                     ((HidInfo)(dev.Info)).vendorID == 0x06cb &&
                     ((HidInfo)(dev.Info)).productID == 0x0f &&
@@ -100,8 +100,8 @@ namespace Auto_Backlight_for_ThinkPad
                     dev.InputReceived += captureHandler;
                 }
             }
-            if (f != 3)
-                throw new Exception("Failed to hook both Lenovo keyboard and mouse raw input devices");
+            if (f < 1)
+                throw new Exception("Failed to hook any Lenovo input device");
         }
 
         private bool _enabled = false;
